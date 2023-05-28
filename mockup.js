@@ -20,7 +20,7 @@ const app = express().use(body_parser.json()); // creates express http server
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
 let requestCount = -1;
-console.log(arrayOfFunctions);
+// arrayOfFunctions[1]();
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
