@@ -119,7 +119,9 @@ function sendGreeting(phone_number_id, from) {
     },
   });
 }
-function writeAnnouncement() {}
+function writeAnnouncement() {
+  console.log("sujper");
+}
 function selectGroup() {}
 function announcementTime() {}
 function deadline() {}
@@ -128,5 +130,5 @@ function confirm() {
   //i also sent the announcement to you
 }
 function anythingElse() {}
-let arrayOfFunctions = [sendGreeting];
+let arrayOfFunctions = [sendGreeting, writeAnnouncement];
 module.exports = arrayOfFunctions;
