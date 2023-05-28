@@ -76,12 +76,3 @@ app.get("/webhook", (req, res) => {
     res.sendStatus(400);
   }
 });
-
-function textIsAGreeting(txt) {
-  let lwTxt = txt.toLowerCase();
-  let textIsGreeting = false;
-  if (lwTxt == "hey" || lwTxt == "hello" || lwTxt == "hi" || lwTxt == "hii") {
-    textIsGreeting = true;
-  }
-  return textIsGreeting;
-}

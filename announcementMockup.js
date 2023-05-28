@@ -1,4 +1,6 @@
+const axios = require("axios");
 function sendGreeting(phone_number_id, from) {
+  console.log("started");
   const token = process.env.WHATSAPP_TOKEN;
   //send greeting first
   axios({
