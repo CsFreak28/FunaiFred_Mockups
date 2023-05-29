@@ -42,8 +42,7 @@ app.post("/webhook", (req, res) => {
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
-      let msg_body =
-        messageType == req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
+      let msg_body; // extract the message text from the webhook payload
       if (messageType == "interactive") {
         msg_body =
           req.body.entry[0].changes[0].value.messages[0].interactive.type ===
@@ -52,6 +51,10 @@ app.post("/webhook", (req, res) => {
                 .button_reply.title
             : req.body.entry[0].changes[0].value.messages[0].interactive
                 .list_reply.title;
+      } else {
+        let msg_body =
+          messageType ==
+          req.body.entry[0].changes[0].value.messages[0].text.body;
       }
       if (msg_body == "restart") {
         requestCount = 0;
