@@ -41,7 +41,7 @@ app.post("/webhook", (req, res) => {
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
-      let messageType = request.body.entry[0].changes[0].value.messages[0].type;
+      let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       let msg_body =
         messageType == req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
       if (messageType == "interactive") {
