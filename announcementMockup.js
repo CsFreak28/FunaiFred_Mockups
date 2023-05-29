@@ -143,6 +143,7 @@ async function writeAnnouncement(phone_number_id, from) {
   });
 }
 async function selectGroup(phone_number_id, from) {
+  const token = process.env.WHATSAPP_TOKEN;
   await axios({
     method: "POST",
     url: "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
@@ -234,6 +235,7 @@ async function announcementTime(phone_number_id, from) {
   });
 }
 async function deadline() {
+  const token = process.env.WHATSAPP_TOKEN;
   await axios({
     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
     url:
