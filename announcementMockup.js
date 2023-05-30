@@ -234,7 +234,7 @@ async function announcementTime(phone_number_id, from) {
     headers: { "Content-Type": "application/json" },
   });
 }
-async function deadline() {
+async function deadline(phone_number_id, from) {
   const token = process.env.WHATSAPP_TOKEN;
   await axios({
     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
