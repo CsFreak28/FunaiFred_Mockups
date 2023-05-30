@@ -54,7 +54,7 @@ app.post("/webhook", async (req, res) => {
       //         : req.body.entry[0].changes[0].value.messages[0].interactive
       //             .list_reply.title;
       //     if (msg_body == "restart") {
-      //       console.log(msg_body, "i am the restart function");
+      //       conso\le.log(msg_body, "i am the restart function");dffdg
       //       requestCount = 0;
       //       await arrayOfFunctions[requestCount](phone_number_id, from);
       //     } else {
