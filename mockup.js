@@ -61,7 +61,7 @@ app.post("/webhook", (req, res) => {
         requestCount = 0;
         arrayOfFunctions[requestCount](phone_number_id, from);
       } else {
-        console.log("i am not the restart function");
+        console.log(msg_body, "i am not the restart function");
         requestCount += 1;
         arrayOfFunctions[requestCount](phone_number_id, from);
       }
