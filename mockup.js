@@ -38,7 +38,7 @@ app.post("/webhook", async (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
-      console.log("debugging", requestCount);
+      console.log("debugging fdfg", requestCount);
       requestCount += 1;
       //   let phone_number_id =
       //     req.body.entry[0].changes[0].value.metadata.phone_number_id;
