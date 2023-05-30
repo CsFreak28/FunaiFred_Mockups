@@ -264,6 +264,5 @@ let arrayOfFunctions = [
   selectGroup,
   announcementTime,
   deadline,
-  confirm,
 ];
 module.exports = arrayOfFunctions;
