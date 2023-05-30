@@ -25,7 +25,7 @@ let requestCount = -1;
 app.get("/", (req, res) => {
   res.send("connected successfully");
 });
-app.post("/webhook", (req, res) => {
+app.post("/webhook", async (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
   // Check the Incoming webhook message
@@ -54,7 +54,7 @@ app.post("/webhook", (req, res) => {
         if (msg_body == "restart") {
           console.log(msg_body, "i am the restart function");
           requestCount = 0;
-          arrayOfFunctions[requestCount](phone_number_id, from);
+          await arrayOfFunctions[requestCount](phone_number_id, from);
         } else {
           console.log(msg_body, "i am not the restart function");
           requestCount += 1;
@@ -65,11 +65,11 @@ app.post("/webhook", (req, res) => {
         if (msg_body == "restart") {
           console.log(msg_body, "i am the restart function");
           requestCount = 0;
-          arrayOfFunctions[requestCount](phone_number_id, from);
+          await arrayOfFunctions[requestCount](phone_number_id, from);
         } else {
           console.log(msg_body, "i am not the restart function");
           requestCount += 1;
-          arrayOfFunctions[requestCount](phone_number_id, from);
+          await arrayOfFunctions[requestCount](phone_number_id, from);
         }
       }
     }
