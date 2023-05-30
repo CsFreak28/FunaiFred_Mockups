@@ -52,7 +52,7 @@ app.post("/webhook", (req, res) => {
             : req.body.entry[0].changes[0].value.messages[0].interactive
                 .list_reply.title;
       } else {
-        let msg_body =
+        msg_body =
           messageType ==
           req.body.entry[0].changes[0].value.messages[0].text.body;
       }
