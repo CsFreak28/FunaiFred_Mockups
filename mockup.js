@@ -38,40 +38,41 @@ app.post("/webhook", async (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
-      let phone_number_id =
-        req.body.entry[0].changes[0].value.metadata.phone_number_id;
-      let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
-      let messageType = req.body.entry[0].changes[0].value.messages[0].type;
-      let msg_body; // extract the message text from the webhook payload
-      if (messageType == "interactive") {
-        msg_body =
-          req.body.entry[0].changes[0].value.messages[0].interactive.type ===
-          "button_reply"
-            ? req.body.entry[0].changes[0].value.messages[0].interactive
-                .button_reply.title
-            : req.body.entry[0].changes[0].value.messages[0].interactive
-                .list_reply.title;
-        if (msg_body == "restart") {
-          console.log(msg_body, "i am the restart function");
-          requestCount = 0;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
-        } else {
-          console.log(msg_body, "i am not the restart function");
-          requestCount += 1;
-          arrayOfFunctions[requestCount](phone_number_id, from);
-        }
-      } else if (messageType == "text") {
-        msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-        if (msg_body == "restart") {
-          console.log(msg_body, "i am the restart function");
-          requestCount = 0;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
-        } else {
-          console.log(msg_body, "i am not the restart function");
-          requestCount += 1;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
-        }
-      }
+      console.log("debugging");
+      //   let phone_number_id =
+      //     req.body.entry[0].changes[0].value.metadata.phone_number_id;
+      //   let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
+      //   let messageType = req.body.entry[0].changes[0].value.messages[0].type;
+      //   let msg_body; // extract the message text from the webhook payload
+      //   if (messageType == "interactive") {
+      //     msg_body =
+      //       req.body.entry[0].changes[0].value.messages[0].interactive.type ===
+      //       "button_reply"
+      //         ? req.body.entry[0].changes[0].value.messages[0].interactive
+      //             .button_reply.title
+      //         : req.body.entry[0].changes[0].value.messages[0].interactive
+      //             .list_reply.title;
+      //     if (msg_body == "restart") {
+      //       console.log(msg_body, "i am the restart function");
+      //       requestCount = 0;
+      //       await arrayOfFunctions[requestCount](phone_number_id, from);
+      //     } else {
+      //       console.log(msg_body, "i am not the restart function");
+      //       requestCount += 1;
+      //       arrayOfFunctions[requestCount](phone_number_id, from);
+      //     }
+      //   } else if (messageType == "text") {
+      //     msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+      //     if (msg_body == "restart") {
+      //       console.log(msg_body, "i am the restart function");
+      //       requestCount = 0;
+      //       await arrayOfFunctions[requestCount](phone_number_id, from);
+      //     } else {
+      //       console.log(msg_body, "i am not the restart function");
+      //       requestCount += 1;
+      //       await arrayOfFunctions[requestCount](phone_number_id, from);
+      //     }
+      //   }
     }
   }
 });

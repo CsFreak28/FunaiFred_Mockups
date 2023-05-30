@@ -247,7 +247,7 @@ async function deadline(phone_number_id, from) {
       messaging_product: "whatsapp",
       to: from,
       text: {
-        body: "Got it \n this announcement will be sent to your 46 out 134 student offering CSC 301 \n what time would you like to send this announcement \n write the date and time in any of these formats e.g *NOW* *22/06/23* *Friday* *7pm* ",
+        body: "",
       },
     },
     headers: { "Content-Type": "application/json" },
