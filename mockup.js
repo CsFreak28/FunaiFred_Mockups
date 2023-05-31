@@ -28,7 +28,8 @@ app.get("/", (req, res) => {
   res.send("connected successfully");
   console.log("connected oo");
 }); //2zatx.localto.net/webhook
-https: app.post("/webhook", async (req, res) => {
+app.post("/webhook", async (req, res) => {
+  console.log("label remove");
   // Parse the request body from the POST
   let body = req.body;
   // Check the Incoming webhook message
