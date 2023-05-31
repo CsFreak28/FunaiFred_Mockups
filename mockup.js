@@ -62,10 +62,12 @@ https: app.post("/webhook", async (req, res) => {
           requestCount = 0;
           await arrayOfFunctions[requestCount](phone_number_id, from);
           console.log(requestCount);
+          return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
           arrayOfFunctions[requestCount](phone_number_id, from);
+          return;
         }
       } else if (messageType == "text") {
         usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
@@ -73,10 +75,12 @@ https: app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am the restart function");
           requestCount = 0;
           await arrayOfFunctions[requestCount](phone_number_id, from);
+          return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
           await arrayOfFunctions[requestCount](phone_number_id, from);
+          return;
         }
       }
     }
