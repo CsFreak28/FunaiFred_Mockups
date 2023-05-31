@@ -228,13 +228,51 @@ async function announcementTime(phone_number_id, from) {
       messaging_product: "whatsapp",
       to: from,
       text: {
-        body: "Got it \n this announcement will be sent to your 46 out 134 student offering CSC 301 \n what time would you like to send this announcement \n write the date and time in any of these formats e.g *NOW* *22/06/23* *Friday* *7pm* ",
+        body: "Your announcement will be sent to 46 out 134 student offering CSC 301",
       },
     },
     headers: { "Content-Type": "application/json" },
   });
+  await axios({
+    method: "POST",
+    url: "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: from,
+      type: "interactive",
+      interactive: {
+        type: "button",
+        body: {
+          text: "With the deadline being Friday, I will send this announcement right away and three more times to ensure that everyone follows the instruction \n are you okay with that ?",
+        },
+        action: {
+          buttons: [
+            {
+              type: "reply",
+              reply: {
+                title: "Yes, I am",
+                id: 23,
+              },
+            },
+            {
+              type: "reply",
+              reply: {
+                title: "No, I'm not",
+                id: 26,
+              },
+            },
+          ],
+        },
+      },
+    },
+  });
 }
-async function deadline(phone_number_id, from) {
+async function confirmation(phone_number_id, from) {
   const token = process.env.WHATSAPP_TOKEN;
   await axios({
     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -263,6 +301,6 @@ let arrayOfFunctions = [
   writeAnnouncement,
   selectGroup,
   announcementTime,
-  deadline,
+  confirmation,
 ];
 module.exports = arrayOfFunctions;
