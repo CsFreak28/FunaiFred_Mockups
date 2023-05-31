@@ -45,6 +45,7 @@ app.post("/webhook", async (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       let usersText; // extract the message text from the webhook payload
+      console.log(requestCount);
       if (messageType == "interactive") {
         usersText =
           req.body.entry[0].changes[0].value.messages[0].interactive.type ===
