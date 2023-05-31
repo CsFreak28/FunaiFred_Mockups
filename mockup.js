@@ -24,8 +24,8 @@ let requestCount = -1;
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
-});
-app.post("/webhook", async (req, res) => {
+}); //2zatx.localto.net/webhook
+https: app.post("/webhook", async (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
   // Check the Incoming webhook message
@@ -39,13 +39,11 @@ app.post("/webhook", async (req, res) => {
       req.body.entry[0].changes[0].value.messages[0]
     ) {
       console.log("debugging fdfg", requestCount);
-      requestCount += 1;
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       let usersText; // extract the message text from the webhook payload
-      console.log(requestCount);
       if (messageType == "interactive") {
         usersText =
           req.body.entry[0].changes[0].value.messages[0].interactive.type ===
@@ -54,11 +52,13 @@ app.post("/webhook", async (req, res) => {
                 .button_reply.title
             : req.body.entry[0].changes[0].value.messages[0].interactive
                 .list_reply.title;
+        console.log("this is the request count", requestCount);
         if (usersText == "restart") {
           console.log(usersText, "i am the restart function");
           dffdg;
           requestCount = 0;
           await arrayOfFunctions[requestCount](phone_number_id, from);
+          console.log(requestCount);
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
