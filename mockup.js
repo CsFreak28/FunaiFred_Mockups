@@ -61,13 +61,18 @@ app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am the restart function");
           dffdg;
           requestCount = 0;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
+          let theFuction = arrayOfFunctions[requestCount];
+          if (theFuction) await theFuction(phone_number_id, from);
+
           console.log(requestCount);
           return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
+          let theFuction = arrayOfFunctions[requestCount];
+          if (theFuction) await theFuction(phone_number_id, from);
+
+          console.log(requestCount);
           return;
         }
       } else if (messageType == "text") {
@@ -75,12 +80,18 @@ app.post("/webhook", async (req, res) => {
         if (usersText == "restart") {
           console.log(usersText, "i am the restart function");
           requestCount = 0;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
+          let theFuction = arrayOfFunctions[requestCount];
+          if (theFuction) await theFuction(phone_number_id, from);
+
+          console.log(requestCount);
           return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
-          await arrayOfFunctions[requestCount](phone_number_id, from);
+          let theFuction = arrayOfFunctions[requestCount];
+          if (theFuction) await theFuction(phone_number_id, from);
+
+          console.log(requestCount);
           return;
         }
       }
