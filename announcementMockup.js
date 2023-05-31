@@ -274,6 +274,23 @@ async function announcementTime(phone_number_id, from) {
 }
 async function confirmation(phone_number_id, from) {
   const token = process.env.WHATSAPP_TOKEN;
+  const url = "https://www.bulksmsnigeria.com/api/v2/sms "; // Replace with your API endpoint URL
+
+  const postData = {
+    from: "CSC DEPT",
+    to: from,
+    body: "i am the boss",
+    api_token: "yn7Zj74kgZwLJFpgQLBdlambXsc6xfplBvhudWDFDV4PKrtH4H1MdhHnQj0l",
+  };
+
+  axios
+    .post(url, postData)
+    .then((response) => {
+      console.log("Post request successful:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error occurred during post request:", error);
+    });
   await axios({
     method: "POST", // Required, HTTP method, a string, e.g. POST, GET
     url:
@@ -285,7 +302,7 @@ async function confirmation(phone_number_id, from) {
       messaging_product: "whatsapp",
       to: from,
       text: {
-        body: "",
+        body: "announcement sent ✅",
       },
     },
     headers: { "Content-Type": "application/json" },
