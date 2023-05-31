@@ -62,7 +62,7 @@ app.post("/webhook", async (req, res) => {
           dffdg;
           requestCount = 0;
           let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) await theFuction(phone_number_id, from);
+          if (theFuction) theFuction(phone_number_id, from);
 
           console.log(requestCount);
           return;
@@ -70,7 +70,7 @@ app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
           let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) await theFuction(phone_number_id, from);
+          if (theFuction) theFuction(phone_number_id, from);
 
           console.log(requestCount);
           return;
@@ -81,7 +81,7 @@ app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am the restart function");
           requestCount = 0;
           let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) await theFuction(phone_number_id, from);
+          if (theFuction) theFuction(phone_number_id, from);
 
           console.log(requestCount);
           return;
@@ -89,7 +89,7 @@ app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
           let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) await theFuction(phone_number_id, from);
+          if (theFuction) theFuction(phone_number_id, from);
 
           console.log(requestCount);
           return;
