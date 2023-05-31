@@ -13,17 +13,20 @@
 const token = process.env.WHATSAPP_TOKEN;
 // Imports dependencies and set up http server
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
 const body_parser = require("body-parser");
 const axios = require("axios").default;
 const arrayOfFunctions = require("./announcementMockup");
 const app = express().use(body_parser.json()); // creates express http server
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
+app.listen(process.env.PORT || 3000, () => console.log("webhook is listening"));
 let requestCount = -1;
 // arrayOfFunctions[1]();
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
+  console.log("connected oo");
 }); //2zatx.localto.net/webhook
 https: app.post("/webhook", async (req, res) => {
   // Parse the request body from the POST
@@ -88,6 +91,7 @@ app.get("/webhook", (req, res) => {
    *This will be the Verify Token value when you set up webhook
    **/
   const verify_token = process.env.VERIFY_TOKEN;
+  console.log("verify token", verify_token);
   // Parse params from the webhook verification request
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
