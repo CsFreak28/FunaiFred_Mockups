@@ -67,7 +67,7 @@ app.post("/webhook", async (req, res) => {
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
-          arrayOfFunctions[requestCount](phone_number_id, from);
+          await arrayOfFunctions[requestCount](phone_number_id, from);
           return;
         }
       } else if (messageType == "text") {
