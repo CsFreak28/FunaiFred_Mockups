@@ -46,22 +46,57 @@ app.post("/webhook", async (req, res) => {
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from;
-      axios({
-        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url:
-          "https://graph.facebook.com/v16.0/" +
-          phone_number_id +
-          "/messages?access_token=" +
-          token,
-        data: {
-          messaging_product: "whatsapp",
-          to: from,
-          text: {
-            body: "Good morning Boss !, \n I'm feeling energetic and ready to help you tackle the stress of being a course rep 😅\n what can I do to help ?",
+      let usersText;
+      let messageType = request.body.entry[0].changes[0].value.messages[0].type;
+      if (messageType == "interactive") {
+        usersText =
+          request.body.entry[0].changes[0].value.messages[0].text.body;
+      } else {
+        usersText =
+          request.body.entry[0].changes[0].value.messages[0].interactive
+            .type === "button_reply"
+            ? request.body.entry[0].changes[0].value.messages[0].interactive
+                .button_reply.title
+            : request.body.entry[0].changes[0].value.messages[0].interactive
+                .list_reply.title;
+      }
+      if (usersText === "hey" || usersText === "Hey") {
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v16.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: {
+              body: "Good morning Boss !, \n I'm feeling energetic and ready to help you tackle the stress of being a course rep 😅\n what can I do to help ?",
+            },
           },
-        },
-        headers: { "Content-Type": "application/json" },
-      });
+          headers: { "Content-Type": "application/json" },
+        });
+      } else if (usersText === "Make An Announcement") {
+        const token = process.env.WHATSAPP_TOKEN;
+        //send greeting first
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v16.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: {
+              body: "Okay, write or forward the announcement to me",
+            },
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+      }
     }
     res.sendStatus(200);
   } else {
