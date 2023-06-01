@@ -63,6 +63,113 @@ app.post("/webhook", async (req, res) => {
             },
           },
           headers: { "Content-Type": "application/json" },
+        }).then(() => {
+          console.log("second function called");
+          axios({
+            method: "POST",
+            url:
+              "https://graph.facebook.com/v15.0/" +
+              phone_number_id +
+              "/messages",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            data: {
+              messaging_product: "whatsapp",
+              recipient_type: "individual",
+              to: from,
+              type: "interactive",
+              interactive: {
+                type: "list",
+                header: {
+                  type: "text",
+                  text: "THINGS I CAN DO ",
+                },
+                body: {
+                  text: "This is a list of things I can help you do right now, \n in a future update I'm sure I'll be able to help more",
+                },
+                action: {
+                  button: "COMMAND LIST",
+                  sections: [
+                    {
+                      title: "PAYMENTS 💰",
+                      rows: [
+                        {
+                          title: "Make A Payment",
+                          description: "I want to make a payment.",
+                          id: "23",
+                        },
+                        {
+                          title: "Payment Reciepts",
+                          description:
+                            "I want to get the reciept of a payment I made.",
+                          id: "24",
+                        },
+                      ],
+                    },
+                    {
+                      title: "INFORMATION 📰",
+                      rows: [
+                        {
+                          title: "Course Information",
+                          description:
+                            "I want to get information on things happening in CSC department",
+                          id: "25",
+                        },
+                        {
+                          title: "School Information",
+                          description:
+                            "I want to get information on things happening in School",
+                          id: "26",
+                        },
+                      ],
+                    },
+                    {
+                      title: "ANNOUNCEMENTS 📢",
+                      rows: [
+                        {
+                          title: "Make An Announcement",
+                          description: "I want to make an announcement.",
+                          id: "56",
+                        },
+                        {
+                          title: "Track An Announcement",
+                          description: "I want to manage an announcement",
+                          id: "65",
+                        },
+                      ],
+                    },
+                    {
+                      title: "ATTENDANCE (✨)",
+                      rows: [
+                        {
+                          title: "Take Attendance",
+                          description: "Take my attendance",
+                          id: "30",
+                        },
+                        {
+                          title: "Attendance Record",
+                          description: "Get my attendance record",
+                          id: "31",
+                        },
+                      ],
+                    },
+                    {
+                      title: "ACADEMIC STUFF 📚",
+                      rows: [
+                        {
+                          title: "My Result",
+                          description: "Get My Result",
+                          id: "32",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            },
+          });
         });
       } else if (usersText === "Make An Announcement") {
         const token = process.env.WHATSAPP_TOKEN;
@@ -87,7 +194,7 @@ app.post("/webhook", async (req, res) => {
         const url = "https://www.bulksmsnigeria.com/api/v2/sms "; // Replace with your API endpoint URL
 
         const postData = {
-          from: "CSC DEPT",
+          from: "CSC DEPARTMENT",
           to: from,
           body: "Dear Donald, \n Your CSC 301 computer analysis assignment should be submitted on Friday",
           api_token:
