@@ -21,9 +21,6 @@ const arrayOfFunctions = require("./announcementMockup");
 const app = express().use(body_parser.json()); // creates express http server
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 3000, () => console.log("webhook is listening"));
-let requestCount = -1;
-let theFunction = arrayOfFunctions[0];
-// arrayOfFunctions[1]();
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
@@ -49,6 +46,7 @@ app.post("/webhook", async (req, res) => {
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       let usersText = getMessageText(messageType, req);
       console.log("the user's text", usersText);
+      markMessageAsRead(req);
       if (usersText === "hey" || usersText === "Hey") {
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -315,3 +313,33 @@ app.get("/webhook", (req, res) => {
     res.sendStatus(400);
   }
 });
+async function markMessageAsRead(request) {
+  const token = process.env.WHATSAPP_TOKEN;
+  let msgID = request.body.entry[0].changes[0].value.messages[0].id;
+  console.log(msgID);
+  let phone_number_id =
+    request.body.entry[0].changes[0].value.metadata.phone_number_id;
+  var data = JSON.stringify({
+    messaging_product: "whatsapp",
+    status: "read",
+    message_id: msgID,
+  });
+
+  var config = {
+    method: "POST",
+    url: "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    data: data,
+  };
+
+  await axios(config)
+    .then(function (response) {
+      console.log("mark message as read, complete");
+    })
+    .catch(function (error) {
+      // console.log(error);
+    });
+}
