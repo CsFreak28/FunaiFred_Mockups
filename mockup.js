@@ -47,17 +47,16 @@ app.post("/webhook", async (req, res) => {
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from;
       let usersText;
-      let messageType = request.body.entry[0].changes[0].value.messages[0].type;
+      let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       if (messageType == "interactive") {
-        usersText =
-          request.body.entry[0].changes[0].value.messages[0].text.body;
+        usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
       } else {
         usersText =
-          request.body.entry[0].changes[0].value.messages[0].interactive
-            .type === "button_reply"
-            ? request.body.entry[0].changes[0].value.messages[0].interactive
+          req.body.entry[0].changes[0].value.messages[0].interactive.type ===
+          "button_reply"
+            ? req.body.entry[0].changes[0].value.messages[0].interactive
                 .button_reply.title
-            : request.body.entry[0].changes[0].value.messages[0].interactive
+            : req.body.entry[0].changes[0].value.messages[0].interactive
                 .list_reply.title;
       }
       if (usersText === "hey" || usersText === "Hey") {
