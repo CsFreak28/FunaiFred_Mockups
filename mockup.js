@@ -46,19 +46,9 @@ app.post("/webhook", async (req, res) => {
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from;
-      let usersText = "";
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
-      if (messageType == "interactive") {
-        usersText =
-          req.body.entry[0].changes[0].value.messages[0].interactive.type ===
-          "button_reply"
-            ? req.body.entry[0].changes[0].value.messages[0].interactive
-                .button_reply.title
-            : req.body.entry[0].changes[0].value.messages[0].interactive
-                .list_reply.title;
-      } else {
-        usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
-      }
+      let usersText = getMessageText(messageType, req);
+      console.log("the user's text", usersText);
       if (usersText === "hey" || usersText === "Hey") {
         axios({
           method: "POST", // Required, HTTP method, a string, e.g. POST, GET
@@ -102,7 +92,24 @@ app.post("/webhook", async (req, res) => {
     res.sendStatus(404);
   }
 });
-
+function getMessageText(msgType, req) {
+  let usersText;
+  if (msgType === "interactive") {
+    let typeOfInteractive =
+      req.body.entry[0].changes[0].value.messages[0].interactive.type;
+    if (typeOfInteractive == "button_reply") {
+      usersText =
+        eq.body.entry[0].changes[0].value.messages[0].interactive.button_reply
+          .title;
+    } else {
+      usersText =
+        req.body.entry[0].changes[0].value.messages[0].interactive.list_reply
+          .title;
+    }
+  } else {
+    usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
+  }
+}
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 // info on verification req payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
 app.get("/webhook", (req, res) => {
