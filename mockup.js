@@ -49,8 +49,6 @@ app.post("/webhook", async (req, res) => {
       let usersText = "";
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       if (messageType == "interactive") {
-        usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
-      } else {
         usersText =
           req.body.entry[0].changes[0].value.messages[0].interactive.type ===
           "button_reply"
@@ -58,6 +56,8 @@ app.post("/webhook", async (req, res) => {
                 .button_reply.title
             : req.body.entry[0].changes[0].value.messages[0].interactive
                 .list_reply.title;
+      } else {
+        usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
       }
       if (usersText === "hey" || usersText === "Hey") {
         axios({
