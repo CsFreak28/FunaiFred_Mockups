@@ -22,6 +22,7 @@ const app = express().use(body_parser.json()); // creates express http server
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 3000, () => console.log("webhook is listening"));
 let requestCount = -1;
+let theFunction = arrayOfFunctions[0];
 // arrayOfFunctions[1]();
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
@@ -61,16 +62,14 @@ app.post("/webhook", async (req, res) => {
           console.log(usersText, "i am the restart function");
           dffdg;
           requestCount = 0;
-          let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) theFuction(phone_number_id, from);
+          if (theFunction) theFunction(phone_number_id, from);
 
           console.log(requestCount);
           return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
-          let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) theFuction(phone_number_id, from);
+          if (theFunction) theFunction(phone_number_id, from);
 
           console.log(requestCount);
           return;
@@ -80,16 +79,14 @@ app.post("/webhook", async (req, res) => {
         if (usersText == "restart") {
           console.log(usersText, "i am the restart function");
           requestCount = 0;
-          let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) theFuction(phone_number_id, from);
+          if (theFunction) theFunction(phone_number_id, from);
 
           console.log(requestCount);
           return;
         } else {
           console.log(usersText, "i am not the restart function");
           requestCount += 1;
-          let theFuction = arrayOfFunctions[requestCount];
-          if (theFuction) theFuction(phone_number_id, from);
+          if (theFunction) theFunction(phone_number_id, from);
 
           console.log(requestCount);
           return;
