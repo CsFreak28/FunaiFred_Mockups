@@ -43,6 +43,9 @@ app.post("/webhook", async (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
+      let phone_number_id =
+        request.body.entry[0].changes[0].value.metadata.phone_number_id;
+      let from = request.body.entry[0].changes[0].value.messages[0].from;
       axios({
         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
         url:
