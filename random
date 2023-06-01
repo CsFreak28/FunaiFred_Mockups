@@ -1,0 +1,19 @@
+function getMessageText(msgType, req) {
+  let usersText;
+  if (msgType === "interactive") {
+    let typeOfInteractive =
+      req.body.entry[0].changes[0].value.messages[0].interactive.type;
+    if (typeOfInteractive == "button_reply") {
+      usersText =
+        eq.body.entry[0].changes[0].value.messages[0].interactive.button_reply
+          .title;
+    } else {
+      usersText =
+        req.body.entry[0].changes[0].value.messages[0].interactive.list_reply
+          .title;
+    }
+  } else {
+    usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
+  }
+  return usersText;
+}

@@ -85,6 +85,182 @@ app.post("/webhook", async (req, res) => {
           },
           headers: { "Content-Type": "application/json" },
         });
+      } else if (usersText == "CSC 301") {
+        const url = "https://www.bulksmsnigeria.com/api/v2/sms "; // Replace with your API endpoint URL
+
+        const postData = {
+          from: "CSC DEPT",
+          to: from,
+          body: "Dear Donald, \n Your CSC 301 computer analysis assignment should be submitted on Friday",
+          api_token:
+            "yn7Zj74kgZwLJFpgQLBdlambXsc6xfplBvhudWDFDV4PKrtH4H1MdhHnQj0l",
+        };
+
+        axios
+          .post(url, postData)
+          .then((response) => {
+            console.log("Post request successful:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error occurred during post request:", error);
+          });
+        const token = process.env.WHATSAPP_TOKEN;
+        //send greeting first
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v16.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: {
+              body: "Your announcement will be sent to 46 out 134 student offering CSC 301",
+            },
+          },
+          headers: { "Content-Type": "application/json" },
+        }).then(() => {
+          axios({
+            method: "POST",
+            url:
+              "https://graph.facebook.com/v15.0/" +
+              phone_number_id +
+              "/messages",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            data: {
+              messaging_product: "whatsapp",
+              recipient_type: "individual",
+              to: from,
+              type: "interactive",
+              interactive: {
+                type: "button",
+                body: {
+                  text: "With the deadline being Friday, I will send this announcement right away and three more times to ensure that everyone follows the instruction \n are you okay with that ?",
+                },
+                action: {
+                  buttons: [
+                    {
+                      type: "reply",
+                      reply: {
+                        title: "Yes, I am",
+                        id: 23,
+                      },
+                    },
+                    {
+                      type: "reply",
+                      reply: {
+                        title: "No, I'm not",
+                        id: 26,
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          });
+        });
+      } else if (usersText == "Yes, I am") {
+        const token = process.env.WHATSAPP_TOKEN;
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v16.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            messaging_product: "whatsapp",
+            to: from,
+            text: {
+              body: "announcement sent ✅",
+            },
+          },
+          headers: { "Content-Type": "application/json" },
+        });
+      } else {
+        const token = process.env.WHATSAPP_TOKEN;
+        axios({
+          method: "POST",
+          url:
+            "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          data: {
+            messaging_product: "whatsapp",
+            recipient_type: "individual",
+            to: from,
+            type: "interactive",
+            interactive: {
+              type: "list",
+              header: {
+                type: "text",
+                text: "SELECT A GROUP",
+              },
+              body: {
+                text: "These are different groups of students in your department, you can select a specific group of coursemates and I'll send the announcement to only the selected group.",
+              },
+              action: {
+                button: "COMMAND LIST",
+                sections: [
+                  {
+                    title: "GROUPS",
+                    rows: [
+                      {
+                        title: "CSC 331",
+                        description:
+                          "Send the announcement to CSC 331 students",
+                        id: "23",
+                      },
+                      {
+                        title: "ENT 301",
+                        description:
+                          "Send the announcement to CSC 331 students",
+                        id: "24",
+                      },
+                      {
+                        title: "CSC 301",
+                        description:
+                          "Send the announcement to CSC 301 students",
+                        id: "25",
+                      },
+                      {
+                        title: "CSC 303",
+                        description:
+                          "Send the announcement to CSC 303 students",
+                        id: "26",
+                      },
+                      {
+                        title: "CSC 309",
+                        description:
+                          "Send the announcement to CSC 309 students",
+                        id: "27",
+                      },
+                      {
+                        title: "CSC 305",
+                        description:
+                          "Send the announcement to CSC 305 students",
+                        id: "28",
+                      },
+                      {
+                        title: "CSC 315",
+                        description:
+                          "Send the announcement to CSC 315 students",
+                        id: "29",
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        });
       }
     }
     res.sendStatus(200);
