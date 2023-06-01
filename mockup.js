@@ -43,55 +43,22 @@ app.post("/webhook", async (req, res) => {
       req.body.entry[0].changes[0].value.messages &&
       req.body.entry[0].changes[0].value.messages[0]
     ) {
-      console.log("debugging fdfg", requestCount);
-      let phone_number_id =
-        req.body.entry[0].changes[0].value.metadata.phone_number_id;
-      let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
-      let messageType = req.body.entry[0].changes[0].value.messages[0].type;
-      let usersText; // extract the message text from the webhook payload
-      if (messageType == "interactive") {
-        usersText =
-          req.body.entry[0].changes[0].value.messages[0].interactive.type ===
-          "button_reply"
-            ? req.body.entry[0].changes[0].value.messages[0].interactive
-                .button_reply.title
-            : req.body.entry[0].changes[0].value.messages[0].interactive
-                .list_reply.title;
-        console.log("this is the request count", requestCount);
-        if (usersText == "restart") {
-          console.log(usersText, "i am the restart function");
-          dffdg;
-          requestCount = 0;
-          if (theFunction) theFunction(phone_number_id, from);
-
-          console.log(requestCount);
-          return;
-        } else {
-          console.log(usersText, "i am not the restart function");
-          requestCount += 1;
-          if (theFunction) theFunction(phone_number_id, from);
-
-          console.log(requestCount);
-          return;
-        }
-      } else if (messageType == "text") {
-        usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
-        if (usersText == "restart") {
-          console.log(usersText, "i am the restart function");
-          requestCount = 0;
-          if (theFunction) theFunction(phone_number_id, from);
-
-          console.log(requestCount);
-          return;
-        } else {
-          console.log(usersText, "i am not the restart function");
-          requestCount += 1;
-          if (theFunction) theFunction(phone_number_id, from);
-
-          console.log(requestCount);
-          return;
-        }
-      }
+      axios({
+        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+        url:
+          "https://graph.facebook.com/v16.0/" +
+          phone_number_id +
+          "/messages?access_token=" +
+          token,
+        data: {
+          messaging_product: "whatsapp",
+          to: from,
+          text: {
+            body: "Good morning Boss !, \n I'm feeling energetic and ready to help you tackle the stress of being a course rep 😅\n what can I do to help ?",
+          },
+        },
+        headers: { "Content-Type": "application/json" },
+      });
     }
     res.sendStatus(200);
   } else {
