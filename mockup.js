@@ -109,6 +109,7 @@ function getMessageText(msgType, req) {
   } else {
     usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
   }
+  return usersText;
 }
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
 // info on verification req payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
