@@ -275,7 +275,7 @@ function getMessageText(msgType, req) {
       req.body.entry[0].changes[0].value.messages[0].interactive.type;
     if (typeOfInteractive == "button_reply") {
       usersText =
-        eq.body.entry[0].changes[0].value.messages[0].interactive.button_reply
+        req.body.entry[0].changes[0].value.messages[0].interactive.button_reply
           .title;
     } else {
       usersText =
