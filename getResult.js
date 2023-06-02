@@ -11,7 +11,7 @@ const getResultFunctions = {
         messaging_product: "whatsapp",
         to: from,
         text: {
-          body: `Hey ${name}, \n I'm the *BETA* version of FUNAI FRED 🤩, right now all I can do for you `,
+          body: `Hey ${name}, \n I'm the *BETA* version of FUNAI FRED 🤩, this is a list of what I can do for you`,
         },
       },
       headers: { "Content-Type": "application/json" },

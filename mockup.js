@@ -329,14 +329,14 @@ app.post("/webhook", async (req, res) => {
                   {
                     type: "reply",
                     reply: {
-                      title: "Yes",
+                      title: "YES",
                       id: 23,
                     },
                   },
                   {
                     type: "reply",
                     reply: {
-                      title: "No",
+                      title: "NO",
                       id: 26,
                     },
                   },
@@ -346,6 +346,7 @@ app.post("/webhook", async (req, res) => {
           },
         });
       } else if (usersText == "NO") {
+        reactToMessage(req, "❤️");
         return;
       } else {
         const token = process.env.WHATSAPP_TOKEN;
@@ -509,4 +510,30 @@ async function markMessageAsRead(request) {
     .catch(function (error) {
       // console.log(error);
     });
+}
+export async function reactToMessage(request, emoji) {
+  const token = process.env.WHATSAPP_TOKEN;
+  let from = request.body.entry[0].changes[0].value.messages[0].from;
+  let msgID = request.body.entry[0].changes[0].value.messages[0].id;
+  let phone_number_id =
+    request.body.entry[0].changes[0].value.metadata.phone_number_id;
+  let data = {
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: from,
+    type: "reaction",
+    reaction: {
+      message_id: msgID,
+      emoji: emoji,
+    },
+  };
+  await axios({
+    method: "POST",
+    url: "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    data: data,
+  });
 }
