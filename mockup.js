@@ -307,20 +307,43 @@ app.post("/webhook", async (req, res) => {
       } else if (usersText == "Thanks" || usersText == "thanks") {
         console.log("thanks was said");
         axios({
-          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          method: "POST",
           url:
-            "https://graph.facebook.com/v16.0/" +
-            phone_number_id +
-            "/messages?access_token=" +
-            token,
+            "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           data: {
             messaging_product: "whatsapp",
+            recipient_type: "individual",
             to: from,
-            text: {
-              body: `You're welcome Donald 💯`,
+            type: "interactive",
+            interactive: {
+              type: "button",
+              body: {
+                text: "You're welcome Donald, is there anything else I can help you with?",
+              },
+              action: {
+                buttons: [
+                  {
+                    type: "reply",
+                    reply: {
+                      title: "Yes",
+                      id: 23,
+                    },
+                  },
+                  {
+                    type: "reply",
+                    reply: {
+                      title: "No",
+                      id: 26,
+                    },
+                  },
+                ],
+              },
             },
           },
-          headers: { "Content-Type": "application/json" },
         });
         axios({
           method: "POST",
