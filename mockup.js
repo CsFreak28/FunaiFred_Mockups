@@ -211,8 +211,8 @@ app.post("/webhook", async (req, res) => {
       } else if (usersText == "CSC 301") {
         const url = "https://www.bulksmsnigeria.com/api/v2/sms "; // Replace with your API endpoint URL
         const postData = {
-          from: "CSC GROUP",
-          to: "2348088663596",
+          from: "CSC DEPT",
+          to: "2349137302300",
           body: "Dear Donald, \n Your CSC 301 computer analysis assignment should be submitted on Friday",
           api_token:
             "yn7Zj74kgZwLJFpgQLBdlambXsc6xfplBvhudWDFDV4PKrtH4H1MdhHnQj0l",
