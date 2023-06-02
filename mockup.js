@@ -322,7 +322,7 @@ app.post("/webhook", async (req, res) => {
             interactive: {
               type: "button",
               body: {
-                text: "You're welcome Donald, is there anything else I can help you with?",
+                text: "You're welcome Donald 💯, \n is there anything else I can help you with?",
               },
               action: {
                 buttons: [
@@ -369,6 +369,7 @@ app.post("/webhook", async (req, res) => {
           .catch((e) => {
             console.log("this was an error", e);
           });
+      } else if (usersText == "NO") {
       } else {
         const token = process.env.WHATSAPP_TOKEN;
         axios({
