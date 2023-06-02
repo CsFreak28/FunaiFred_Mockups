@@ -16,14 +16,31 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const body_parser = require("body-parser");
+const fs = require("fs");
 const axios = require("axios").default;
-const arrayOfFunctions = require("./announcementMockup");
 const app = express().use(body_parser.json()); // creates express http server
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 3000, () => console.log("webhook is listening"));
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
+  const fileData = fs.readFileSync("./shake.webp");
+  const token = process.env.WHATSAPP_TOKEN;
+  // Create an instance of FormData and append the file data
+  const formData = new FormData();
+  // formData.append("file", fileData, "shake");
+  axios.post("https://graph.facebook.com/v16.0/" + phone_number_id + "/media", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      file: "./shake.webp",
+      messaging_product: "whatsapp",
+      type: "image/webp",
+    },
+  });
+  // Send the Axios POST request
+
   console.log("connected oo");
 }); //2zatx.localto.net/webhook
 app.post("/webhook", async (req, res) => {
@@ -42,6 +59,7 @@ app.post("/webhook", async (req, res) => {
     ) {
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
+      console.log(phone_number_id);
       let from = req.body.entry[0].changes[0].value.messages[0].from;
       let messageType = req.body.entry[0].changes[0].value.messages[0].type;
       let usersText = getMessageText(messageType, req);
@@ -412,7 +430,7 @@ function getMessageText(msgType, req) {
         req.body.entry[0].changes[0].value.messages[0].interactive.list_reply
           .title;
     }
-  } else {
+  } else if (msgType === "text") {
     usersText = req.body.entry[0].changes[0].value.messages[0].text.body;
   }
   return usersText;
