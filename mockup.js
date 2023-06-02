@@ -305,6 +305,9 @@ app.post("/webhook", async (req, res) => {
                 link: "https://ibb.co/ZBzpHwk",
               },
             },
+          }).catch((e) => {
+            console.log("this is the error");
+            console.log(e.data);
           });
         });
       } else {
