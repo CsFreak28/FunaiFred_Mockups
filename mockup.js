@@ -322,7 +322,7 @@ app.post("/webhook", async (req, res) => {
             interactive: {
               type: "button",
               body: {
-                text: "You're welcome Donald 💯, \n is there anything else I can help you with?",
+                text: "You're welcome Donald 💯, \n is there anything else I can help you with ?",
               },
               action: {
                 buttons: [
@@ -345,31 +345,8 @@ app.post("/webhook", async (req, res) => {
             },
           },
         });
-        axios({
-          method: "POST",
-          url:
-            "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            messaging_product: "whatsapp",
-            recipient_type: "individual",
-            to: from,
-            type: "sticker",
-            sticker: {
-              link: "https://ibb.co/Wn5cmwJ",
-            },
-          },
-        })
-          .then((data) => {
-            console.log("data sent", data);
-          })
-          .catch((e) => {
-            console.log("this was an error", e);
-          });
       } else if (usersText == "NO") {
+        return;
       } else {
         const token = process.env.WHATSAPP_TOKEN;
         axios({
