@@ -285,30 +285,25 @@ app.post("/webhook", async (req, res) => {
             },
           },
           headers: { "Content-Type": "application/json" },
-        }).then(() => {
-          axios({
-            method: "POST",
-            url:
-              "https://graph.facebook.com/v15.0/" +
-              phone_number_id +
-              "/messages",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+        });
+      } else if (usersText == "Thanks" || usersText == "thanks") {
+        axios({
+          method: "POST",
+          url:
+            "https://graph.facebook.com/v15.0/" + phone_number_id + "/messages",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            messaging_product: "whatsapp",
+            recipient_type: "individual",
+            to: from,
+            type: "sticker",
+            sticker: {
+              link: "https://ibb.co/ZBzpHwk",
             },
-            data: {
-              messaging_product: "whatsapp",
-              recipient_type: "individual",
-              to: from,
-              type: "sticker",
-              sticker: {
-                link: "https://ibb.co/ZBzpHwk",
-              },
-            },
-          }).catch((e) => {
-            console.log("this is the error");
-            console.log(e.data);
-          });
+          },
         });
       } else {
         const token = process.env.WHATSAPP_TOKEN;
