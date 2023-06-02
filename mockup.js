@@ -320,7 +320,7 @@ app.post("/webhook", async (req, res) => {
             to: from,
             type: "sticker",
             sticker: {
-              link: "https://ibb.co/ZBzpHwk",
+              link: "https://drive.google.com/file/d/1NjfSDFlUkrBXq3NX7TCyujT-1RKUd4xa/view?usp=drive_link",
             },
           },
         })
