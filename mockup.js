@@ -511,7 +511,7 @@ async function markMessageAsRead(request) {
       // console.log(error);
     });
 }
-export async function reactToMessage(request, emoji) {
+async function reactToMessage(request, emoji) {
   const token = process.env.WHATSAPP_TOKEN;
   let from = request.body.entry[0].changes[0].value.messages[0].from;
   let msgID = request.body.entry[0].changes[0].value.messages[0].id;
