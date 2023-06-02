@@ -287,6 +287,7 @@ app.post("/webhook", async (req, res) => {
           headers: { "Content-Type": "application/json" },
         });
       } else if (usersText == "Thanks" || usersText == "thanks") {
+        console.log("thanks was said");
         axios({
           method: "POST",
           url:
@@ -304,6 +305,8 @@ app.post("/webhook", async (req, res) => {
               link: "https://ibb.co/ZBzpHwk",
             },
           },
+        }).catch((e) => {
+          console.log("this was an error", e);
         });
       } else {
         const token = process.env.WHATSAPP_TOKEN;
