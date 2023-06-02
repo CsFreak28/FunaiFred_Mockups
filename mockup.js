@@ -24,21 +24,21 @@ app.listen(process.env.PORT || 3000, () => console.log("webhook is listening"));
 // Accepts POST requests at /webhook endpoint
 app.get("/", (req, res) => {
   res.send("connected successfully");
-  const fileData = fs.readFileSync("./shake.webp");
-  const token = process.env.WHATSAPP_TOKEN;
+  // const fileData = fs.readFileSync("./shake.webp");
+  // const token = process.env.WHATSAPP_TOKEN;
   // Create an instance of FormData and append the file data
-  const formData = new FormData();
+  // const formData = new FormData();
   // formData.append("file", fileData, "shake");
-  axios.post("https://graph.facebook.com/v16.0/" + phone_number_id + "/media", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: {
-      file: "./shake.webp",
-      messaging_product: "whatsapp",
-      type: "image/webp",
-    },
-  });
+  // axios.post("https://graph.facebook.com/v16.0/" + phone_number_id + "/media", {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  //   data: {
+  //     file: "./shake.webp",
+  //     messaging_product: "whatsapp",
+  //     type: "image/webp",
+  //   },
+  // });
   // Send the Axios POST request
 
   console.log("connected oo");
